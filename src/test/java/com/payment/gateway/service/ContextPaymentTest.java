@@ -1,5 +1,6 @@
 package com.payment.gateway.service;
 
+import com.payment.gateway.model.PaymentResponse;
 import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
@@ -19,22 +20,22 @@ class ContextPaymentTest {
     protected ContextPayment contextPayment;
 
     @Inject
-    Instance<IPay> instance;
+    Instance<IPay<PaymentResponse>> instance;
 
     @Test
     void testContextPayment(){
 
 
         instance.stream().forEach(iPay -> {
-            assertEquals("ApplePay 100",contextPayment.doPayment(100,PaymentType.APPLE));
+            assertEquals("ApplePay 100",contextPayment.doPayment(100,"EUR",PaymentType.APPLE));
         });
     }
 
     @Test
     public void testDoPayment() {
 
-        String apple = contextPayment.doPayment(100, PaymentType.fromString("apple"));
-        String payPal = contextPayment.doPayment(100, PaymentType.fromString("paypal"));
+        String apple = (String) contextPayment.doPayment(100,"EUR", PaymentType.fromString("apple"));
+        String payPal = (String) contextPayment.doPayment(100,"EUR", PaymentType.fromString("paypal"));
         assertEquals("PayPal 100", payPal);
         assertEquals("ApplePay 100", apple);
     }

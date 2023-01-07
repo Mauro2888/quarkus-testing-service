@@ -1,18 +1,19 @@
 package com.payment.gateway;
 
 
-import com.payment.gateway.converters.EnumConverter;
-import com.payment.gateway.service.*;
-import io.quarkus.security.Authenticated;
+import com.payment.gateway.configuration.CurrencyConfig;
+import com.payment.gateway.service.ContextPayment;
+import com.payment.gateway.service.PaymentType;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jboss.resteasy.reactive.RestQuery;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Optional;
 
 @Path("/pay")
 public class GatewayMain {
@@ -22,15 +23,26 @@ public class GatewayMain {
     @ConfigProperty(name = "payment.supported")
     String supported;
 
+
+    @Inject
+    CurrencyConfig currencyConfig;
+
     public GatewayMain(ContextPayment contextPayment) {
         this.contextPayment = contextPayment;
     }
 
     @GET
-    @Path("/to")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String type(@QueryParam("type") String paymentType) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object type(@QueryParam("type") String paymentType) {
         PaymentType type = PaymentType.fromString(paymentType);
-        return contextPayment.doPayment(1000,type);
+        Optional<String> any = currencyConfig.getSupportedCurrency().stream().findAny();
+        return contextPayment.doPayment(1000,any.get(),type);
+    }
+
+    @GET
+    @Path("/currency")
+    @Produces(MediaType.TEXT_PLAIN)
+    public List<String> currency() {
+        return currencyConfig.getSupportedCurrency();
     }
 }

@@ -1,8 +1,15 @@
-# payment-gateway-service Project
+# payment-gateway-service
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus.
+This project is for testing and learn how Dependency Injection works in Quarkus.
+For testing CDI in Quarkus has been created a basic ContextClass, this class allow to switch
+between services and simulate at runtime the logic for switching services.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Endpoints
+http://localhost:8080/pay/to?type={type}
+ - supported {type} : PayPal OR  Apple
+
+http://localhost:8080/pay/currency
 
 ## Running the application in dev mode
 
@@ -50,15 +57,3 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ```
 
 You can then execute your native executable with: `./target/payment-gateway-service-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)

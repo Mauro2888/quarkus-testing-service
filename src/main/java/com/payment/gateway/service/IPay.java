@@ -1,7 +1,7 @@
 package com.payment.gateway.service;
 
-public interface IPay {
-    String pay(int amount);
+public interface IPay<T> {
+    T pay(int amount,String currency);
 
     PaymentType type();
 }
