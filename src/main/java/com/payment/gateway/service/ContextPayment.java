@@ -3,6 +3,7 @@ package com.payment.gateway.service;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,8 @@ public class ContextPayment {
                 .collect(Collectors.toUnmodifiableMap(IPay::type, Function.identity()));
     }
     public String doPayment(int amount,PaymentType type){
-        return paymentTypeIPayMap.get(type).pay(amount);
+        IPay iPayStrategy = paymentTypeIPayMap.getOrDefault(type,null);
+        if (Objects.isNull(iPayStrategy)) throw new IllegalStateException("No payment method available");
+        return  iPayStrategy.pay(amount);
     }
 }

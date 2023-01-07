@@ -31,6 +31,6 @@ public class GatewayMain {
     @Produces(MediaType.TEXT_PLAIN)
     public String type(@QueryParam("type") String paymentType) {
         PaymentType type = PaymentType.fromString(paymentType);
-        return contextPayment.doPayment(100,type);
+        return contextPayment.doPayment(1000,type);
     }
 }
