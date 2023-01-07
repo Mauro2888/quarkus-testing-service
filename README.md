@@ -6,7 +6,7 @@ For testing CDI in Quarkus has been created a basic ContextClass, this class all
 between services and simulate at runtime the logic for switching services.
 
 ## Endpoints
-http://localhost:8080/pay/to?type={type}
+http://localhost:8080/pay?type={type}
  - supported {type} : PayPal OR  Apple
 
 http://localhost:8080/pay/currency
