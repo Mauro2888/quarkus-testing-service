@@ -1,8 +1,8 @@
 # payment-gateway-service
 
-This project uses Quarkus.
-This project is for testing and learn how Dependency Injection works in Quarkus.
-For testing CDI in Quarkus has been created a basic ContextClass, this class allow to switch
+- This project uses Quarkus.
+- This project is for testing and learn how Dependency Injection works in Quarkus.
+- For testing CDI in Quarkus has been created a basic ContextClass, this class allow to switch
 between services and simulate at runtime the logic for switching services.
 
 ## Endpoints
